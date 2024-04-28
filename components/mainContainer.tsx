@@ -7,7 +7,9 @@ type MainContainerProps = {
 const MainContainer = ({ children }: MainContainerProps) => {
   return (
     <div className="w-full flex flex-col items-center">
-      <div className="w-[500px] shadow-md h-screen">{children}</div>
+      <div className="w-[500px] shadow-md min-h-screen max-h-auto">
+        {children}
+      </div>
     </div>
   );
 };
