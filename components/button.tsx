@@ -13,7 +13,7 @@ export default function Button({ type }: ButtonProps) {
         <button className="w-full bg-[#37A59E] p-2 rounded-md text-white font-black text-[24px]">
           Register
         </button>
-      ) : type === "registerFormButton" ? (
+      ) : type === "writeFormButton" ? (
         <button className="w-full bg-[#37A59E] p-2 rounded-md text-white font-black text-[24px]">
           Submit
         </button>
