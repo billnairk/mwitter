@@ -2,16 +2,22 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useSWR from "swr";
 
-interface userIdType {
-  id: number | undefined;
-}
-
-export default function useUser(id?: 1) {
-  id = 1;
-  const { data, error } = useSWR("/api/users/myinfo");
-  // console.log(data?.myProfile);
+export default function useUser() {
+  // useEffect(() => {
+  //   const userName = localStorage.getItem("username");
+  // }, []);
+  let userName: any;
+  const router = useRouter();
+  if (typeof window !== "undefined") {
+    userName = localStorage.getItem("username");
+  }
+  const { data, error } = useSWR(`/api/users/myinfo/${userName}`);
   useEffect(() => {
-    // console.log(data?.myProfile);
-  }, [data]);
+    if (userName === null) router.replace("/login");
+    if (error) {
+      console.log(error);
+      return;
+    }
+  }, [data, error]);
   return data;
 }

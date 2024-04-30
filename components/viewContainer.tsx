@@ -17,10 +17,6 @@ interface LoginForm {
   password: string;
 }
 
-interface MutationType {
-  ok: boolean;
-}
-
 const ViewContainer: React.FC<ViewContainerProps> = ({ type }) => {
   const { register, handleSubmit } = useForm<LoginForm>();
   const router = useRouter();
@@ -33,6 +29,7 @@ const ViewContainer: React.FC<ViewContainerProps> = ({ type }) => {
     { loading: loginLoading, data: loginData, error: loginError },
   ] = useMutation("/api/users/login");
   const onValidLogin = (loginFormData: any) => {
+    localStorage.setItem("username", loginFormData.id);
     loginFn(loginFormData);
   };
   const onValidRegister = (registerData: any) => {

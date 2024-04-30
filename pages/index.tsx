@@ -6,8 +6,7 @@ import useUser from "../lib/client/useUser";
 import useSWR, { useSWRConfig } from "swr";
 
 export default function Home() {
-  // const user = useUser();
-  // console.log(user);
+  const user = useUser();
   return (
     <>
       <MainContainer>
