@@ -5,6 +5,7 @@ import Mwit from "./mwit";
 import MwitFav from "./mwitFav";
 import MwitPost from "./mwitPost";
 import useMutation from "../lib/client/useMutation";
+import { useEffect } from "react";
 
 interface ViewContainerProps {
   type: string;
@@ -25,9 +26,13 @@ const ViewContainer: React.FC<ViewContainerProps> = ({ type }) => {
     "/api/users/register"
   );
   const onValid = (LoginFormData: any) => {
-    console.log(loading, data, error);
+    // console.log(`전: ${loading}, ${JSON.stringify(data)}, ${error}`);
     registerFn(LoginFormData);
+    // console.log(`후: ${loading}, ${JSON.stringify(data)}, ${error}`);
   };
+  useEffect(() => {
+    console.log(`로딩 상태 변화, ${loading}`);
+  }, [loading]);
   return (
     <div className="p-4 mt-4 flex-grow">
       {type === "mwitPostListBoard" ? (
