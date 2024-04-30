@@ -5,7 +5,6 @@ export default async function Myinfo(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log(req.url);
   const urlArray = await req.url?.split("/api/users/myinfo/");
   let userId;
   if (urlArray) {
