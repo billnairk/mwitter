@@ -6,6 +6,7 @@ import MwitFav from "./mwitFav";
 import MwitPost from "./mwitPost";
 import useMutation from "../lib/client/useMutation";
 import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 interface ViewContainerProps {
   type: string;
@@ -17,22 +18,31 @@ interface LoginForm {
 }
 
 interface MutationType {
-  fn: true;
+  ok: boolean;
 }
 
 const ViewContainer: React.FC<ViewContainerProps> = ({ type }) => {
   const { register, handleSubmit } = useForm<LoginForm>();
+  const router = useRouter();
   const [registerFn, { loading, data, error }] = useMutation(
     "/api/users/register"
   );
-  const onValid = (LoginFormData: any) => {
-    // console.log(`전: ${loading}, ${JSON.stringify(data)}, ${error}`);
-    registerFn(LoginFormData);
-    // console.log(`후: ${loading}, ${JSON.stringify(data)}, ${error}`);
+  const [
+    loginFn,
+    { loading: loginLoading, data: loginData, error: loginError },
+  ] = useMutation("/api/users/login");
+  const onValidLogin = (loginFormData: any) => {
+    loginFn(loginFormData);
+    console.log("lgoin data", loginData);
+  };
+  const onValidRegister = (registerData: any) => {
+    registerFn(registerData);
   };
   useEffect(() => {
-    console.log(`로딩 상태 변화, ${loading}`);
-  }, [loading]);
+    if (loginData?.ok) {
+      router.push("/");
+    }
+  }, [loginData, router]);
   return (
     <div className="p-4 mt-4 flex-grow">
       {type === "mwitPostListBoard" ? (
@@ -55,7 +65,7 @@ const ViewContainer: React.FC<ViewContainerProps> = ({ type }) => {
         </div>
       ) : null}
       {type === "mwitLoginBoard" ? (
-        <form onSubmit={handleSubmit(onValid)}>
+        <form onSubmit={handleSubmit(onValidLogin)}>
           <Input register={register("id", { required: true })} type="id" />
           <Input
             register={register("password", { required: true })}
@@ -65,14 +75,14 @@ const ViewContainer: React.FC<ViewContainerProps> = ({ type }) => {
         </form>
       ) : null}
       {type === "mwitRegisterBoard" ? (
-        <div>
+        <form onSubmit={handleSubmit(onValidRegister)}>
           <Input register={register("id", { required: true })} type="id" />
           <Input
             register={register("password", { required: true })}
             type="password"
           />
           <Button type="registerFormButton" />
-        </div>
+        </form>
       ) : null}
       {type === "mwitWriteBoard" ? (
         <div>

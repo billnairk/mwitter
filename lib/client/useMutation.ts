@@ -1,15 +1,17 @@
 import { useState } from "react";
 
-interface UseMutationStateType {
+interface UseMutationStateType<T> {
   loading: boolean;
-  data?: any;
+  data?: T;
   error?: object;
 }
 
-type useMutationFnType = [(data: any) => void, UseMutationStateType];
+type useMutationFnType<T> = [(data: any) => void, UseMutationStateType<T>];
 
-export default function useMutation(url: string): useMutationFnType {
-  const [state, setState] = useState<UseMutationStateType>({
+export default function useMutation<T = any>(
+  url: string
+): useMutationFnType<T> {
+  const [state, setState] = useState<UseMutationStateType<T>>({
     loading: false,
     data: undefined,
     error: undefined,
@@ -25,8 +27,13 @@ export default function useMutation(url: string): useMutationFnType {
       body: JSON.stringify(data),
     })
       .then((response) => response.json().catch(() => {}))
-      .then((data) => setState((prev) => ({ ...prev, data, loading: false })));
+      .then((data) => {
+        setState((prev) => ({ ...prev, data, loading: false }));
+      })
+      .catch((error) =>
+        setState((prev) => ({ ...prev, error, loading: false }))
+      );
   }
-  console.log(state);
+
   return [mutationFn, { ...state }];
 }
