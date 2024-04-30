@@ -24,16 +24,16 @@ interface MutationType {
 const ViewContainer: React.FC<ViewContainerProps> = ({ type }) => {
   const { register, handleSubmit } = useForm<LoginForm>();
   const router = useRouter();
-  const [registerFn, { loading, data, error }] = useMutation(
-    "/api/users/register"
-  );
+  const [
+    registerFn,
+    { loading: registerLoading, data: registerData, error: registerError },
+  ] = useMutation("/api/users/register");
   const [
     loginFn,
     { loading: loginLoading, data: loginData, error: loginError },
   ] = useMutation("/api/users/login");
   const onValidLogin = (loginFormData: any) => {
     loginFn(loginFormData);
-    console.log("lgoin data", loginData);
   };
   const onValidRegister = (registerData: any) => {
     registerFn(registerData);
@@ -42,7 +42,10 @@ const ViewContainer: React.FC<ViewContainerProps> = ({ type }) => {
     if (loginData?.ok) {
       router.push("/");
     }
-  }, [loginData, router]);
+    if (registerData?.ok) {
+      router.push("/login");
+    }
+  }, [loginData, router, registerData]);
   return (
     <div className="p-4 mt-4 flex-grow">
       {type === "mwitPostListBoard" ? (
