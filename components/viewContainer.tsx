@@ -33,12 +33,11 @@ const ViewContainer: React.FC<ViewContainerProps> = ({ type }) => {
     { loading: loginLoading, data: loginData, error: loginError },
   ] = useMutation("/api/users/login");
   const onValidLogin = (loginFormData: LoginForm) => {
-    console.log(loginFormData);
     setUserFormData(loginFormData);
     loginFn(loginFormData);
   };
   const onValidRegister = (registerFormData: LoginForm) => {
-    setUserFormData(registerFormData);
+    // setUserFormData(registerFormData);
     registerFn(registerFormData);
   };
   useEffect(() => {
@@ -47,7 +46,7 @@ const ViewContainer: React.FC<ViewContainerProps> = ({ type }) => {
       router.push("/");
     }
     if (registerData?.ok) {
-      localStorage.setItem("username", userFormData?.id);
+      // localStorage.setItem("username", userFormData?.id);
       router.push("/login");
     }
   }, [loginData, router, registerData]);

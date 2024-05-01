@@ -7,7 +7,6 @@ interface PageCheckType {
 
 function TopNav({ pageCheck }: PageCheckType) {
   let user: string | undefined | null;
-  console.log("user", user);
   if (typeof window !== "undefined") {
     user = localStorage.getItem("username");
   }
@@ -27,7 +26,7 @@ function TopNav({ pageCheck }: PageCheckType) {
       >
         <p className="text-white font-black text-[32px]">M</p>
       </div>
-      {isUserLoading && (
+      {isUserLoading && pageCheck && (
         <div className="flex">
           <p className="font-black text-red-400">{user}</p>
           <p>님, 안녕하세요</p>
