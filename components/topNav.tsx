@@ -1,11 +1,13 @@
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 interface PageCheckType {
   pageCheck: boolean;
 }
 
-export default function TopNav({ pageCheck }: PageCheckType) {
-  let user;
+function TopNav({ pageCheck }: PageCheckType) {
+  let user: string | undefined | null;
+  console.log("user", user);
   if (typeof window !== "undefined") {
     user = localStorage.getItem("username");
   }
@@ -13,6 +15,10 @@ export default function TopNav({ pageCheck }: PageCheckType) {
   const onClick = () => {
     router.push("/config");
   };
+  const [isUserLoading, setIsUserLoading] = useState(false);
+  useEffect(() => {
+    if (user) setIsUserLoading(true);
+  }, [user]);
   return (
     <div className="w-full flex-grow shadow-md p-3 flex justify-between items-center">
       <div
@@ -21,7 +27,7 @@ export default function TopNav({ pageCheck }: PageCheckType) {
       >
         <p className="text-white font-black text-[32px]">M</p>
       </div>
-      {user && pageCheck && (
+      {isUserLoading && (
         <div className="flex">
           <p className="font-black text-red-400">{user}</p>
           <p>님, 안녕하세요</p>
@@ -30,3 +36,9 @@ export default function TopNav({ pageCheck }: PageCheckType) {
     </div>
   );
 }
+
+TopNav.defaultProps = {
+  pageCheck: false,
+};
+
+export default TopNav;
