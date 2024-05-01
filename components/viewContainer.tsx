@@ -7,6 +7,7 @@ import MwitPost from "./mwitPost";
 import useMutation from "../lib/client/useMutation";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 interface ViewContainerProps {
   type: string;
@@ -72,23 +73,39 @@ const ViewContainer: React.FC<ViewContainerProps> = ({ type }) => {
         </div>
       ) : null}
       {type === "mwitLoginBoard" ? (
-        <form onSubmit={handleSubmit(onValidLogin)}>
+        <form
+          onSubmit={handleSubmit(onValidLogin)}
+          className="flex flex-col justify-center items-center w-full"
+        >
           <Input register={register("id", { required: true })} type="id" />
           <Input
             register={register("password", { required: true })}
             type="password"
           />
-          <Button type="loginFormButton" />
+          <Button type="loginRegister">Login</Button>
+          <Link href="/register">
+            <a>
+              <Button type="or">Register</Button>
+            </a>
+          </Link>
         </form>
       ) : null}
       {type === "mwitRegisterBoard" ? (
-        <form onSubmit={handleSubmit(onValidRegister)}>
+        <form
+          onSubmit={handleSubmit(onValidRegister)}
+          className="flex flex-col justify-center items-center w-full"
+        >
           <Input register={register("id", { required: true })} type="id" />
           <Input
             register={register("password", { required: true })}
             type="password"
           />
-          <Button type="registerFormButton" />
+          <Button type="loginRegister">Register</Button>
+          <Link href="/login">
+            <a>
+              <Button type="or">Login</Button>
+            </a>
+          </Link>
         </form>
       ) : null}
       {type === "mwitWriteBoard" ? (
@@ -99,7 +116,7 @@ const ViewContainer: React.FC<ViewContainerProps> = ({ type }) => {
             className="w-full border-[1px] border-slate-300 rounded-md mb-4 p-2"
             placeholder="Write.."
           />
-          <Button type="writeFormButton" />
+          <Button type="text">Write</Button>
         </div>
       ) : null}
     </div>

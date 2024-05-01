@@ -18,7 +18,16 @@ export default function Button({ type, children }: ButtonProps) {
           {children}
         </button>
       )}
-
+      {type === "loginRegister" && (
+        <button className="w-full bg-[#37A59E] p-3 mb-4 rounded-md text-white font-black text-[24px] hover:cursor-pointer hover:bg-[#245854] ease-in duration-200">
+          {children}
+        </button>
+      )}
+      {type === "or" && (
+        <button className="w-auto bg-[#6b65d4] p-2 mb-4 rounded-md text-white font-black text-[24px] hover:cursor-pointer hover:bg-[#3e418b] ease-in duration-200">
+          or {children}
+        </button>
+      )}
       {/* {type === "loginFormButton" ? (
         <>
           <button className="w-full bg-[#37A59E] p-2 rounded-md text-white font-black text-[24px] mb-4">
