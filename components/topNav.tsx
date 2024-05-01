@@ -1,6 +1,10 @@
 import { useRouter } from "next/router";
 
-export default function TopNav() {
+interface PageCheckType {
+  pageCheck: boolean;
+}
+
+export default function TopNav({ pageCheck }: PageCheckType) {
   let user;
   if (typeof window !== "undefined") {
     user = localStorage.getItem("username");
@@ -17,12 +21,12 @@ export default function TopNav() {
       >
         <p className="text-white font-black text-[32px]">M</p>
       </div>
-      {user ? (
+      {user && pageCheck && (
         <div className="flex">
           <p className="font-black text-red-400">{user}</p>
           <p>님, 안녕하세요</p>
         </div>
-      ) : null}
+      )}
     </div>
   );
 }

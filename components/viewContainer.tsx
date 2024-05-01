@@ -5,7 +5,7 @@ import Mwit from "./mwit";
 import MwitFav from "./mwitFav";
 import MwitPost from "./mwitPost";
 import useMutation from "../lib/client/useMutation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 interface ViewContainerProps {
@@ -20,6 +20,10 @@ interface LoginForm {
 const ViewContainer: React.FC<ViewContainerProps> = ({ type }) => {
   const { register, handleSubmit } = useForm<LoginForm>();
   const router = useRouter();
+  const [userFormData, setUserFormData] = useState({
+    id: "",
+    password: "",
+  });
   const [
     registerFn,
     { loading: registerLoading, data: registerData, error: registerError },
@@ -28,18 +32,22 @@ const ViewContainer: React.FC<ViewContainerProps> = ({ type }) => {
     loginFn,
     { loading: loginLoading, data: loginData, error: loginError },
   ] = useMutation("/api/users/login");
-  const onValidLogin = (loginFormData: any) => {
-    localStorage.setItem("username", loginFormData.id);
+  const onValidLogin = (loginFormData: LoginForm) => {
+    console.log(loginFormData);
+    setUserFormData(loginFormData);
     loginFn(loginFormData);
   };
-  const onValidRegister = (registerData: any) => {
-    registerFn(registerData);
+  const onValidRegister = (registerFormData: LoginForm) => {
+    setUserFormData(registerFormData);
+    registerFn(registerFormData);
   };
   useEffect(() => {
     if (loginData?.ok) {
+      localStorage.setItem("username", userFormData?.id);
       router.push("/");
     }
     if (registerData?.ok) {
+      localStorage.setItem("username", userFormData?.id);
       router.push("/login");
     }
   }, [loginData, router, registerData]);
