@@ -1,6 +1,6 @@
 const MwitPost = () => {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center p-4 mt-4 flex-grow">
       <div className="rounded-lg w-full h-[550px] border-[1px] shadow-md border-slate-300">
         <div className="flex">
           <div className="w-14 h-14 rounded-full bg-yellow-200 m-3"></div>

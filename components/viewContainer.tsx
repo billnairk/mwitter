@@ -60,11 +60,11 @@ const ViewContainer: React.FC<ViewContainerProps> = ({ type }) => {
           })}
         </div>
       ) : null}
-      {type === "mwitPostBoard" ? (
+      {/* {type === "mwitPostBoard" ? (
         <div>
           <MwitPost />
         </div>
-      ) : null}
+      ) : null} */}
       {type === "mwitFavBoard" ? (
         <div>
           {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => {
@@ -108,7 +108,7 @@ const ViewContainer: React.FC<ViewContainerProps> = ({ type }) => {
           </Link>
         </form>
       ) : null}
-      {type === "mwitWriteBoard" ? (
+      {/* {type === "mwitWriteBoard" ? (
         <div>
           <textarea
             rows={20}
@@ -118,7 +118,7 @@ const ViewContainer: React.FC<ViewContainerProps> = ({ type }) => {
           />
           <Button type="text">Write</Button>
         </div>
-      ) : null}
+      ) : null} */}
     </div>
   );
 };
